@@ -5,20 +5,24 @@ $content = file_get_contents('php://input');
 // Parse JSON
 $events = json_decode($content, true);
 // Validate parsed JSON data
-if (!is_null($events['events'])) {
-	// Loop through each event
-	foreach ($events['events'] as $event) {
-		// Reply only when message sent is in 'text' format
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
-			// Get text sent
-			$text = $event['message']['text'];
-			// Get replyToken
-			$replyToken = $event['replyToken'];
-			// Build message to reply back
-			$messages = [
-				'type' => 'text',
-				'text' => $text
-			];
+{
+	"events": [
+		{
+			"type": "message",
+			"replyToken": "ค่า replyToken ของเราที่สนทนากับ bot",
+			"source": {
+				"userId": "ไอดีของ user line ของเรา",
+				"type": "user"
+			},
+			"timestamp": 1510665495557,
+			"message": {
+				"type": "text",
+				"id": "ไอดีของข้อความ",
+				"text": "ข้อความที่เราส่งไป"
+			}
+		}
+	]
+};
 			// Make a POST Request to Messaging API to reply to sender
 			$url = 'https://api.line.me/v2/bot/message/reply';
 			$data = [
